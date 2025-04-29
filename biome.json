@@ -11,7 +11,29 @@
     },
     "formatter": {
         "enabled": true,
-        "indentStyle": "tab"
+        "indentStyle": "tab",
+        "indentWidth": 4,
+        "formatWithErrors": false,
+        "ignore": [],
+        "lineWidth": 200,
+        "lineEnding": "lf",
+        "attributePosition": "auto"
+    },
+    "javascript": {
+        "formatter": {
+            "arrowParentheses": "always",
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "semicolons": "always",
+            "trailingCommas": "all"
+        }
+    },
+    "json": {
+        "formatter": {
+            "trailingCommas": "none"
+        }
     },
     "organizeImports": {
         "enabled": true
@@ -37,11 +59,6 @@
             "nursery": {
                 "useSortedClasses": "error"
             }
-        }
-    },
-    "javascript": {
-        "formatter": {
-            "quoteStyle": "double"
         }
     }
 }
