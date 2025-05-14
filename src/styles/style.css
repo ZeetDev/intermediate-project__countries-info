@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+select {
+	@apply border-r-8 border-transparent;
+}
