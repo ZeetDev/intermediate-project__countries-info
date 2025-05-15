@@ -44,10 +44,93 @@ document.addEventListener("DOMContentLoaded", () => {
 		const countryName = new URLSearchParams(location.search).get("name");
 		fetch(`https://restcountries.com/v3.1/name/${countryName}`)
 			.then((res) => res.json())
-			.then((data) => {
-				const singleCountryName = document?.querySelector("#single-country-name");
-				if (singleCountryName) {
-					singleCountryName.innerHTML = `<span>${data[0]?.name?.common}</span>`;
+			.then(([country]) => {
+				console.log(country);
+				const countryImage = document.querySelector("#country-image");
+				const Image = document.createElement("img");
+				Image.src = country?.flags?.svg;
+				Image.alt = country?.name?.common;
+				Image.className = "h-full w-full object-cover object-center";
+				countryImage?.appendChild(Image);
+
+				const countryInfo = document.querySelector<HTMLDivElement>("#country-info");
+				const infoCard = document.createElement("div");
+				infoCard.innerHTML = `
+				   <h1 class="text-3xl font-bold mb-6">${country?.name?.common}</h1>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                            <!-- Left Column -->
+                            <div>
+                                <div class="mb-4 flex gap-3 flex-col items-start">
+                                    <p>Native Name:</p>
+                                    <ul class="font-bold" id="native-name"></ul>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Population:</p>
+                                    <p class="font-bold">${country?.population.toLocaleString("en-IN")}</p>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Region:</p>
+                                    <p class="font-bold">${country?.region}</p>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Sub Region:</p>
+                                    <p class="font-bold">${country?.subregion}</p>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Capital:</p>
+                                    <p class="font-bold">${[...country.capital]}</p>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div>
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Top Level Domain:</p>
+                                    <p class="font-bold">.be</p>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Currencies:</p>
+                                    <p class="font-bold">Euro</p>
+                                </div>
+
+                                <div class="mb-4 flex items-center gap-3">
+                                    <p>Languages:</p>
+                                    <p class="font-bold">Dutch, French, German</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Border Countries -->
+                        <div class="mt-8">
+                            <div class="flex flex-wrap items-center">
+                                <p class="font-medium mr-4">Border Countries:</p>
+                                <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+                                    <span class="px-4 py-1 border dark:border-white border-neutral-950 text-sm rounded"
+                                        >France</span
+                                    >
+                                    <span class="px-4 py-1 border dark:border-white border-neutral-950 text-sm rounded"
+                                        >Germany</span
+                                    >
+                                    <span class="px-4 py-1 border dark:border-white border-neutral-950 text-sm rounded"
+                                        >Netherlands</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+				`;
+				countryInfo?.appendChild(infoCard);
+				const nativeNames = infoCard.querySelector("#native-name");
+				for (const nName in country?.name?.nativeName) {
+					console.log(nName, "😨 ");
+					const liTag = document.createElement("li");
+					liTag.innerHTML = `<li><span class="font-normal uppercase">${nName}</span> :- ${country?.name?.nativeName[nName]?.official}</li>`;
+					nativeNames?.appendChild(liTag);
 				}
 			});
 	}
